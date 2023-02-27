@@ -47,6 +47,9 @@ def cleaned_combined():
             # Remove any rows with State 'I' (idle state)   
             if cleaned.loc[x,'State'] == 'I':
                 cleaned.drop(x,inplace=True)
+                continue
+            if cleaned.loc[x,'DL_bitrate'] == 0:
+                cleaned.drop(x,inplace=True)
 
         # Create new file name by appending _cleaned before the .csv file extension
         new_name = file.removesuffix('.csv')
