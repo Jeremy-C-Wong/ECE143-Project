@@ -9,7 +9,7 @@ if using_windows:
 else:
     basepath = './5Gdataset-master'
 
-def clean_ind_files():
+def clean_files():
     '''
     Removes unnecessary columns and rows from each CSV file in the desired directory
     Changes time and date stamps to times
@@ -84,5 +84,5 @@ def dir_path_under(basepath):
             df_concat=df_concat.drop(['Unnamed: 0'],axis=1)
         df_concat.to_csv(os.path.join(os.path.dirname(dir_path),'combined_new.csv'))
 
-clean_ind_files()
+clean_files()
 dir_path_under(basepath)
