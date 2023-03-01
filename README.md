@@ -57,12 +57,13 @@ Regarding GitHub Repository - Well documented, reusable Python module targeted a
 │           └── Season3-StrangerThings
 │               └── ...
 │
-├── data_cleanup.py              <- 
+├── data_cleanup.py         <- Script to clean-up and consolidate data
+│                              within each subdirectory of data folder
 │
-├── data_plot.py             <- 
+├── data_plot.py            <- Script to plot data from certain combined.csv files
 │
 ├── generated_visualizations.ipynb          <- Jupyter notebook containing visualizations 
-│                                               generated for presentation
+│                                              generated for presentation
 
 
 Additional template below
