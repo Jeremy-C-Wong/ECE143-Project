@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 import glob
 import os
 
@@ -9,7 +10,7 @@ if using_windows:
 else:
     basepath = './5Gdataset-master'
 
-def clean_files():
+def clean_files(basepath):
     '''
     Removes unnecessary columns and rows from each CSV file in the desired directory
     Changes time and date stamps to times
@@ -32,18 +33,23 @@ def clean_files():
         # Create DataFrame
         df = pd.read_csv(file)
 
-        # Try to remove unnecessary columns (labels)
+        # Try to add empty 'Date' column and remove unnecessary columns (labels)
         try:    
+            df.insert(1,'Timeframe','')
+            df.insert(0,'Date','')
+            df.insert(1,'Day#_Timeframe','')
             cleaned = df.drop(['Latitude','Longitude','Operatorname','CellID','PINGAVG','PINGMIN','PINGMAX','PINGSTDEV','PINGLOSS','CELLHEX','NODEHEX','LACHEX','RAWCELLID','NRxRSRP','NRxRSRQ'],axis=1)
         # Skip if attempting to clean already cleaned file
-        except KeyError:    
+        except ValueError or KeyError:
             continue
 
         # Iterate through each index of the DateFrame
         for x in cleaned.index:
-            # Get time (HH.MM.SS) from Timestamp label
+            # Get date (YYYY.MM.DD) and time (HH.MM.SS) from Timestamp label
+            timestamp_date = cleaned.loc[x,'Timestamp'].split('_')[0]
             timestamp_time = cleaned.loc[x,'Timestamp'].split('_')[1]
-            # Set timestamps to only time (remove the date)
+            # Set date column to date and timestamps to only time (remove the date)
+            cleaned.loc[x,'Date'] = timestamp_date
             cleaned.loc[x,'Timestamp'] = timestamp_time  
             # Remove any rows with State 'I' (idle state)   
             if cleaned.loc[x,'State'] == 'I':
@@ -82,7 +88,72 @@ def dir_path_under(basepath):
         df_concat=pd.concat([pd.read_csv(f) for f in files_combine],ignore_index=True)
         if('Unnamed: 0' in df_concat.columns):
             df_concat=df_concat.drop(['Unnamed: 0'],axis=1)
-        df_concat.to_csv(os.path.join(os.path.dirname(dir_path),'combined_new.csv'))
+        df_concat.to_csv(os.path.join(os.path.dirname(dir_path),'combined.csv'))
 
-clean_files()
-dir_path_under(basepath)
+def get_time_range(hms):
+    '''
+    Return 3-hour timeframe that a given hour falls under
+    '''
+    hour = int(hms.split('.')[0])
+
+    timeframe = ''
+    if 6 <= hour < 9:
+        timeframe = '0600-0859'
+    elif 9 <= hour < 12:
+        timeframe = '0900-1159'
+    elif 12 <= hour < 15:
+        timeframe = '1200-1459'
+    elif 15 <= hour < 18:
+        timeframe = '1500-1759'
+    elif 18 <= hour < 21:
+        timeframe = '1800-2059'
+
+    return timeframe
+
+def set_day_nums(basepath):
+    '''
+    Fill in combined.csv files 'Day#_Timeframe to prepare data for plotting
+    '''
+    if (using_windows):
+        files = glob.glob(basepath + '\\**\\*.csv', recursive=True)     
+    else:
+        files = glob.glob(basepath + '/**/*.csv', recursive=True)
+        print(files)
+    for file in files:
+        if (using_windows):
+            file = file.replace('\\','\\\\')
+        else:
+            file = file.replace('\\','/')
+
+        # Ignore all files except for combined.csv files
+        if 'combined.csv' not in file:
+            continue
+
+        df = pd.read_csv(file)
+
+        # Remove extra index column
+        if('Unnamed: 0' in df.columns):
+            df = df.drop(['Unnamed: 0'],axis=1)
+        # Create list of unique dates in dataframe
+        date_list = df['Date'].unique()
+        # Sort date list in chronological order
+        date_list.sort()
+
+        # Create list of conditions for the Date column to determine test day number (e.g. Day1, Day2, ...)
+        day_conditions = [(df['Date'] == date_list[i]) for i in range(len(date_list))]
+        # Create list of day numbers
+        day_numbers = ['Day' + str(i+1) for i in range(len(date_list))]
+        # Set the Day#_Timeframe column to the corresponding day numbers
+        df['Day#_Timeframe'] = np.select(day_conditions, day_numbers)
+        # Set the Timeframe column to the corresponding timeframes
+        df['Timeframe'] = df['Timestamp'].apply(get_time_range)
+        # Append the timeframes to the Day#_Timeframe column
+        df['Day#_Timeframe'] = df['Day#_Timeframe'] + '_' + df['Timeframe']
+
+        df.to_csv(file)
+
+        
+
+#clean_files(basepath)
+#dir_path_under(basepath)
+set_day_nums(basepath)
