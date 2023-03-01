@@ -97,16 +97,12 @@ def get_time_range(hms):
     hour = int(hms.split('.')[0])
 
     timeframe = ''
-    if 6 <= hour < 9:
-        timeframe = '0600-0859'
-    elif 9 <= hour < 12:
-        timeframe = '0900-1159'
-    elif 12 <= hour < 15:
-        timeframe = '1200-1459'
-    elif 15 <= hour < 18:
-        timeframe = '1500-1759'
-    elif 18 <= hour < 21:
-        timeframe = '1800-2059'
+    # Create list of conditions to determine the time frame
+    conditions = [(6 <= hour < 9),(9 <= hour < 12),(12 <= hour < 15),(15 <= hour < 18),(18 <= hour < 21)]
+    # Create list of timeframes
+    choices = ['0600-0859','0900-1159','1200-1459','1500-1759','1800-2059']
+    # Determine timeframe based on hour value
+    timeframe = str(np.select(conditions,choices))
 
     return timeframe
 
@@ -154,6 +150,6 @@ def set_day_nums(basepath):
 
         
 
-#clean_files(basepath)
-#dir_path_under(basepath)
+clean_files(basepath)
+dir_path_under(basepath)
 set_day_nums(basepath)
