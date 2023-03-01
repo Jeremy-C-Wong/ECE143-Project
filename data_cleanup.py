@@ -20,7 +20,6 @@ def clean_files(basepath):
         files = glob.glob(basepath + '\\**\\*.csv', recursive=True)     
     else: # for non-Windows users
         files = glob.glob(basepath + '/**/*.csv', recursive=True)
-        print(files)
     # Iterate through each file path in the master folder
     for file in files:
 
@@ -37,7 +36,7 @@ def clean_files(basepath):
         try:    
             df.insert(1,'Timeframe','')
             df.insert(0,'Date','')
-            df.insert(1,'Day#_Timeframe','')
+            df.insert(1,'Day_Timeframe','')
             cleaned = df.drop(['Latitude','Longitude','Operatorname','CellID','PINGAVG','PINGMIN','PINGMAX','PINGSTDEV','PINGLOSS','CELLHEX','NODEHEX','LACHEX','RAWCELLID','NRxRSRP','NRxRSRQ'],axis=1)
         # Skip if attempting to clean already cleaned file
         except ValueError or KeyError:
@@ -59,7 +58,6 @@ def clean_files(basepath):
                 cleaned.drop(x,inplace=True)
                 continue
             
-
         # Create new file name by appending _cleaned before the .csv file extension
         new_name = file.removesuffix('.csv')
         new_name += '_cleaned.csv'
@@ -108,13 +106,12 @@ def get_time_range(hms):
 
 def set_day_nums(basepath):
     '''
-    Fill in combined.csv files 'Day#_Timeframe to prepare data for plotting
+    Fill in combined.csv files 'Day_Timeframe to prepare data for plotting
     '''
     if (using_windows):
         files = glob.glob(basepath + '\\**\\*.csv', recursive=True)     
     else:
         files = glob.glob(basepath + '/**/*.csv', recursive=True)
-        print(files)
     for file in files:
         if (using_windows):
             file = file.replace('\\','\\\\')
@@ -139,22 +136,24 @@ def set_day_nums(basepath):
         day_conditions = [(df['Date'] == date_list[i]) for i in range(len(date_list))]
         # Create list of day numbers
         day_numbers = ['Day' + str(i+1) for i in range(len(date_list))]
-        # Set the Day#_Timeframe column to the corresponding day numbers
-        df['Day#_Timeframe'] = np.select(day_conditions, day_numbers)
+        # Set the Day_Timeframe column to the corresponding day numbers
+        df['Day_Timeframe'] = np.select(day_conditions, day_numbers)
         # Set the Timeframe column to the corresponding timeframes
         df['Timeframe'] = df['Timestamp'].apply(get_time_range)
-        # Append the timeframes to the Day#_Timeframe column
-        df['Day#_Timeframe'] = df['Day#_Timeframe'] + '_' + df['Timeframe']
+        # Append the timeframes to the Day_Timeframe column
+        df['Day_Timeframe'] = df['Day_Timeframe'] + '_' + df['Timeframe']
 
-        # FOR TESTING: determine how many Day#_Timeframe periods are in the files to plot
-        dayn_tf_list = df['Day#_Timeframe'].unique()
+        # Re-order indices
+        df = df.reset_index(drop=True)
+
+        # FOR TESTING: determine how many Day_Timeframe periods are in the files to plot
+        dayn_tf_list = df['Day_Timeframe'].unique()
         if 'Season3' in file:
             print(file)
             print(dayn_tf_list)
             print('length:',len(dayn_tf_list))
 
         df.to_csv(file)
-
         
 
 #clean_files(basepath)
