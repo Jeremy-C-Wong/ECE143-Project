@@ -13,7 +13,7 @@ Regarding GitHub Repository - Well documented, reusable Python module targeted a
 ## File Structure
 
 ```
-├── README.md               <- The top-level README for developers using this project.
+├── README.md               <- The README
 ├── 5Gdataset-master
 │   ├── Amazon_Prime        <- Data collected using Amazon Prime         
 │   │   ├── Driving         <- Data collected while driving
