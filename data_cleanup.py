@@ -146,6 +146,7 @@ def set_day_nums(basepath):
         # Append the timeframes to the Day#_Timeframe column
         df['Day#_Timeframe'] = df['Day#_Timeframe'] + '_' + df['Timeframe']
 
+        # FOR TESTING: determine how many Day#_Timeframe periods are in the files to plot
         dayn_tf_list = df['Day#_Timeframe'].unique()
         if 'Season3' in file:
             print(file)
