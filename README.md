@@ -23,12 +23,14 @@ Regarding GitHub Repository - Well documented, reusable Python module targeted a
 │   │   │   │   ├── B_2019.11.28_10.14.25_cleaned.csv
 │   │   │   │   ├── B_2019.11.28_10.14.25.csv
 │   │   │   │   ├── ...
-│   │   │   │   └── combined.csv
+│   │   │   │   └── combined.csv            <- Cleaned and combined data from directory
+│   │   │   │
 │   │   │   └── Season3-TheExpanse      <- Data collected from watching filmed show
-│   │   │   │   ├── B_2019.12.01_12.11.21_cleaned.csv
-│   │   │   │   ├── B_2019.12.01_12.11.21.csv
-│   │   │   │   ├── ...
-│   │   │   │   └── combined.csv
+│   │   │       ├── B_2019.12.01_12.11.21_cleaned.csv
+│   │   │       ├── B_2019.12.01_12.11.21.csv
+│   │   │       ├── ...
+│   │   │       └── combined.csv
+│   │   │
 │   │   └── Static          <- Data collected while stationary 
 │   │       │                  (subdirectories follow same convention as Driving)
 │   │       ├── animated-Ninjago
@@ -36,14 +38,18 @@ Regarding GitHub Repository - Well documented, reusable Python module targeted a
 │   │       │   ├── B_2020.01.06_09.55.13.csv
 │   │       │   ├── ...
 │   │       │   └── combined.csv
+│   │       │
 │   │       └── Season3-TheExpanse
 │   │           ├── ...
 │   │           └── combined.csv
+│   │
 │   ├── Download            <- Data collected when downloading content
 │   │   ├── Driving
 │   │   │   └── ...
+│   │   │
 │   │   └── Static
 │   │       └── ...
+│   │
 |   └── Netflix             <- Data collected using Netflix 
 |       │                      (subdirectories follow same convention as Amazon Prime) 
 │       ├── Driving
@@ -51,6 +57,7 @@ Regarding GitHub Repository - Well documented, reusable Python module targeted a
 │       │   │   └── ...
 │       │   └── Season3-StrangerThings
 │       │       └── ...
+│       │
 │       └── Static
 │           ├── animated-RickandMorty
 │           │   └── ...
