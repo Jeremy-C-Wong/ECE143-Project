@@ -15,9 +15,13 @@ Regarding GitHub Repository - Well documented, reusable Python module targeted a
 ```
 .
 ├── README.md               <- README
+│
 ├── 5Gdataset-master
-│   ├── Amazon_Prime        <- Data collected using Amazon Prime         
+│   │
+│   ├── Amazon_Prime        <- Data collected using Amazon Prime 
+│   │   │        
 │   │   ├── Driving         <- Data collected while driving
+│   │   │   │
 │   │   │   ├── animated-AdventureTime      <- Data collected from watching animated show
 │   │   │   │   ├── B_2019.11.28_07.27.57_cleaned.csv
 │   │   │   │   ├── B_2019.11.28_07.27.57.csv
@@ -45,6 +49,7 @@ Regarding GitHub Repository - Well documented, reusable Python module targeted a
 │   │           └── combined.csv
 │   │
 │   ├── Download            <- Data collected when downloading content
+│   │   │
 │   │   ├── Driving
 │   │   │   └── ...
 │   │   │
@@ -54,14 +59,18 @@ Regarding GitHub Repository - Well documented, reusable Python module targeted a
 |   └── Netflix             <- Data collected using Netflix 
 |       │                      (subdirectories follow same convention as Amazon Prime) 
 │       ├── Driving
+│       │   │
 │       │   ├── animated-RickandMorty
 │       │   │   └── ...
+│       │   │
 │       │   └── Season3-StrangerThings
 │       │       └── ...
 │       │
 │       └── Static
+│           │
 │           ├── animated-RickandMorty
 │           │   └── ...
+│           │
 │           └── Season3-StrangerThings
 │               └── ...
 │
@@ -72,7 +81,7 @@ Regarding GitHub Repository - Well documented, reusable Python module targeted a
 │
 ├── generated_visualizations.ipynb          <- Jupyter notebook containing visualizations 
 │                                              generated for presentation
-
+└── [insert PPTX file name here]            <- PPT of presentation
 
 Additional template below
 
