@@ -14,21 +14,21 @@ plt.rcParams["figure.figsize"] = [15.00, 5.00]
 plt.rcParams["figure.autolayout"] = True
 
 #plot 1 STATIC: Netflix vs Amazon prime , DL_RATE VS Time 
-columns = ['Timestamp','DL_bitrate','RSRQ']
+columns = ['Day_Timeframe','DL_bitrate','RSRQ']
 
-df1 = pd.read_csv("./5Gdataset-master/Amazon_Prime/Static/Season3-TheExpanse/combined_new.csv", usecols=columns)
-df2 = pd.read_csv("./5Gdataset-master/Netflix/Static/Season3-StrangerThings/combined_new.csv", usecols= columns)
+df1 = pd.read_csv("./5Gdataset-master/Amazon_Prime/Static/Season3-TheExpanse/combined.csv", usecols=columns)
+df2 = pd.read_csv("./5Gdataset-master/Netflix/Static/Season3-StrangerThings/combined.csv", usecols= columns)
 
 
-ax = df1.plot(x='Timestamp',y='DL_bitrate')
-df2.plot(ax=ax,x='Timestamp',y='DL_bitrate')
+ax = df1.plot(x='Day_Timeframe',y='DL_bitrate')
+df2.plot(ax=ax,x='Day_Timeframe',y='DL_bitrate')
 plt.savefig('plot1.png')
 
 
 #plot 2 Driving:  Netflix vs Amazon prime , DL_RATE VS Time 
 
-df3 = pd.read_csv("./5Gdataset-master/Amazon_Prime/Driving/Season3-TheExpanse/combined_new.csv", usecols=columns)
-df4 = pd.read_csv("./5Gdataset-master/Netflix/Driving/Season3-StrangerThings/combined_new.csv", usecols= columns)
+df3 = pd.read_csv("./5Gdataset-master/Amazon_Prime/Driving/Season3-TheExpanse/combined.csv", usecols=columns)
+df4 = pd.read_csv("./5Gdataset-master/Netflix/Driving/Season3-StrangerThings/combined.csv", usecols= columns)
 
 
 ax = df3.plot(x='Timestamp',y='DL_bitrate')

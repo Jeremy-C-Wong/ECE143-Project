@@ -35,8 +35,9 @@ def clean_files(basepath):
         # Try to add empty 'Date' column and remove unnecessary columns (labels)
         try:    
             df.insert(1,'Timeframe','')
+            df.insert(0,'Day_Timeframe','')
+            df.insert(0,'Day','')
             df.insert(0,'Date','')
-            df.insert(1,'Day_Timeframe','')
             cleaned = df.drop(['Latitude','Longitude','Operatorname','CellID','PINGAVG','PINGMIN','PINGMAX','PINGSTDEV','PINGLOSS','CELLHEX','NODEHEX','LACHEX','RAWCELLID','NRxRSRP','NRxRSRQ'],axis=1)
         # Skip if attempting to clean already cleaned file
         except ValueError or KeyError:
@@ -137,14 +138,17 @@ def set_day_nums(basepath):
         # Create list of day numbers
         day_numbers = ['Day' + str(i+1) for i in range(len(date_list))]
         # Set the Day_Timeframe column to the corresponding day numbers
-        df['Day_Timeframe'] = np.select(day_conditions, day_numbers)
+        df['Day'] = np.select(day_conditions, day_numbers)
         # Set the Timeframe column to the corresponding timeframes
         df['Timeframe'] = df['Timestamp'].apply(get_time_range)
         # Append the timeframes to the Day_Timeframe column
-        df['Day_Timeframe'] = df['Day_Timeframe'] + '_' + df['Timeframe']
+        df['Day_Timeframe'] = df['Day'] + '_' + df['Timeframe']
+
+        # Re-sort values based on Day and Timeframe
+        df.sort_values(by='Day_Timeframe',inplace=True)
 
         # Re-order indices
-        df = df.reset_index(drop=True)
+        df.reset_index(drop=True, inplace=True)
 
         # FOR TESTING: determine how many Day_Timeframe periods are in the files to plot
         dayn_tf_list = df['Day_Timeframe'].unique()
@@ -156,6 +160,6 @@ def set_day_nums(basepath):
         df.to_csv(file)
         
 
-#clean_files(basepath)
-#dir_path_under(basepath)
+clean_files(basepath)
+dir_path_under(basepath)
 set_day_nums(basepath)
