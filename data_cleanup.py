@@ -144,6 +144,9 @@ def set_day_nums(basepath):
         # Append the timeframes to the Day_Timeframe column
         df['Day_Timeframe'] = df['Day'] + '_' + df['Timeframe']
 
+        # Re-sort values based on Day and Timeframe
+        df.sort_values(by='Day_Timeframe',inplace=True)
+
         # Re-order indices
         df.reset_index(drop=True, inplace=True)
 
