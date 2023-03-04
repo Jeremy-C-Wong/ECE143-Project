@@ -2,8 +2,10 @@ import pandas as pd
 import numpy as np
 import glob
 import os
+import datetime
 
-using_windows = True    # controls file access - change to False if not using Windows system
+using_windows = False    # controls file access - change to False if not using Windows system
+    # ^ unnecessary - simply leave False
 
 if using_windows:
     basepath = '.\\5Gdataset-master'
@@ -158,8 +160,31 @@ def set_day_nums(basepath):
             print('length:',len(dayn_tf_list))
 
         df.to_csv(file)
-        
+
+def convert_datetimes(basepath):
+    '''
+    Convert timestamps to datetime objects
+    '''
+    if (using_windows):
+        files = glob.glob(basepath + '\\**\\*.csv', recursive=True)     
+    else:
+        files = glob.glob(basepath + '/**/*.csv', recursive=True)
+    for file in files:
+        if (using_windows):
+            file = file.replace('\\','\\\\')
+        else:
+            file = file.replace('\\','/')
+
+        # Ignore all files except for combined.csv files
+        if 'combined.csv' not in file:
+            continue
+
+        df = pd.read_csv(file)
+
+        df['Timestamp'] = pd.to_datetime(df['Timestamp'])  
+        df.sort_values(by='Timestamp', inplace=True)  
 
 clean_files(basepath)
 dir_path_under(basepath)
 set_day_nums(basepath)
+convert_datetimes(basepath)
