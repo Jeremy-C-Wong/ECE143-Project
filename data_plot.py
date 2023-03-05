@@ -6,6 +6,79 @@ import time
 import numpy as np
 import scipy as sp
 
+def get_plot_labels(fpath1 : str, fpath2 : str):
+    '''
+    Determine labels for plot using filepath names
+    Sample filepath: "./5Gdataset-master/Amazon_Prime/Static/Season3-TheExpanse/combined.csv"
+    '''
+
+    p1_split = fpath1.split('/')
+    p2_split = fpath2.split('/')
+
+    strm_plat1, mode1, show1 = p1_split[2], p1_split[3], p1_split[4]
+    strm_plat2, mode2, show2 = p2_split[2], p2_split[3], p2_split[4]
+
+    # Determine title based on which two datasets are being compared
+    if strm_plat1 == strm_plat2:
+        legend = [mode1, mode2]
+        title = '{sp}: {m1} vs. {m2}, '.format(sp=strm_plat1, m1=mode1, m2=mode2)
+        fig_name = '{sp}_{m1}v{m2}_'.format(sp=strm_plat1[0], m1=mode1[0], m2=mode2[0])
+    elif mode1 == mode2:
+        legend = [strm_plat1, strm_plat2]
+        title = '{mode}: {sp1} vs. {sp2}, '.format(mode=mode1, sp1=strm_plat1, sp2=strm_plat2)
+        fig_name = '{mode}_{sp1}v{sp2}_'.format(mode=mode1, sp1=strm_plat1, sp2=strm_plat2)
+    return legend, title, fig_name
+
+def plot_df(fpath1 : str, fpath2 : str, y_axis='DL_bitrate', day='Day1', subplots=False, columns=['Day','Timestamp','DL_bitrate','RSRQ','RSRP','RSSI']
+):
+    '''
+    Plot two dataframes with given settings
+    '''
+
+    plt.rcParams["figure.figsize"] = [15.00, 5.00]
+    plt.rcParams["figure.autolayout"] = True
+
+    df1 = pd.read_csv(fpath1)
+    df2 = pd.read_csv(fpath2)
+
+    legend, title, fig_name = get_plot_labels(fpath1, fpath2)
+
+    # Find minimum number of rows between df1 and df2
+    min_rows = min(df1.loc[df1.Day==day].count()[0],df2.loc[df2.Day==day].count()[0])
+
+    if subplots:
+        fig, axes = plt.subplots(nrows=2, ncols=2)
+
+        for i in range(2):
+            for j in range(2):
+                ax = df1.loc[df1.Day==day].head(min_rows).plot(x='Timestamp',y=y_axis,ax=axes[i,j])
+                #ax = df1.loc[df1.Day=='Day1'].head(min_rows).plot(x='Timestamp',y='DL_bitrate')
+                '''USE FOR RUNNING AVERAGE'''
+                temp = df1.loc[df1.Day==day].head(min_rows).values.tolist()
+                # print(type(temp))
+
+                df2.loc[df2.Day==day].head(min_rows).plot(ax=ax,x='Timestamp',y='DL_bitrate')
+                plt.legend(legend)
+                plt.title(title + y_axis, fontsize=8)
+                plt.xlabel(day)
+                plt.ylabel(y_axis)
+                axes[i,j].set(xlabel=day,ylabel=y_axis)
+    else:
+        ax = df1.loc[df1.Day==day].head(min_rows).plot(x='Timestamp',y=y_axis,ax=axes[i,j])
+        #ax = df1.loc[df1.Day=='Day1'].head(min_rows).plot(x='Timestamp',y='DL_bitrate')
+        '''USE FOR RUNNING AVERAGE'''
+        temp = df1.loc[df1.Day==day].head(min_rows).values.tolist()
+        # print(type(temp))
+
+        df2.loc[df2.Day==day].head(min_rows).plot(ax=ax,x='Timestamp',y='DL_bitrate')
+        plt.legend(legend)
+        plt.title(title + y_axis, fontsize=8)
+        plt.xlabel(day)
+        plt.ylabel(y_axis)
+
+    plt.savefig('{fname}{y_name}.png'.format(fname=fig_name, y_name=y_axis))                   
+
+
 
 '''
 TO-DO : Follow the peak graph style
@@ -14,6 +87,9 @@ and number of rows : once combined_new is resolved
 
 plt.rcParams["figure.figsize"] = [15.00, 5.00]
 plt.rcParams["figure.autolayout"] = True
+
+# Dataframe naming scheme: df_<Amazon/Netflix>_<static/driving>_<film/animated>
+                    # e.g. df_az_st_fi or df_nf_dr_an
 
 columns = ['Day','Timestamp','DL_bitrate','RSRQ','RSRP','RSSI']
 df1 = pd.read_csv("./5Gdataset-master/Amazon_Prime/Static/Season3-TheExpanse/combined.csv", usecols=columns)
