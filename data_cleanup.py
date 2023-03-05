@@ -2,7 +2,8 @@ import pandas as pd
 import numpy as np
 import glob
 import os
-import datetime
+import time
+import datetime as dt
 
 using_windows = False    # controls file access - change to False if not using Windows system
     # ^ unnecessary - simply leave False
@@ -142,22 +143,25 @@ def set_day_nums(basepath):
         # Set the Day_Timeframe column to the corresponding day numbers
         df['Day'] = np.select(day_conditions, day_numbers)
         # Set the Timeframe column to the corresponding timeframes
-        df['Timeframe'] = df['Timestamp'].apply(get_time_range)
+        #df['Timeframe'] = df['Timestamp'].apply(get_time_range)
         # Append the timeframes to the Day_Timeframe column
-        df['Day_Timeframe'] = df['Day'] + '_' + df['Timeframe']
+        #df['Day_Timeframe'] = df['Day'] + '_' + df['Timeframe']
 
         # Re-sort values based on Day and Timeframe
-        df.sort_values(by='Day_Timeframe',inplace=True)
+        #df.sort_values(by='Day_Timeframe',inplace=True)
 
         # Re-order indices
         df.reset_index(drop=True, inplace=True)
 
         # FOR TESTING: determine how many Day_Timeframe periods are in the files to plot
-        dayn_tf_list = df['Day_Timeframe'].unique()
-        if 'Season3' in file:
-            print(file)
-            print(dayn_tf_list)
-            print('length:',len(dayn_tf_list))
+        # dayn_tf_list = df['Day_Timeframe'].unique()
+        # if 'Season3' in file:
+        #     print(file)
+        #     print(dayn_tf_list)
+        #     print('length:',len(dayn_tf_list))
+
+        df['RSSI'] = df['RSSI'].replace('-', -110)
+        df['RSRQ'] = df['RSRQ'].replace('-', -19.5)
 
         df.to_csv(file)
 
@@ -181,8 +185,11 @@ def convert_datetimes(basepath):
 
         df = pd.read_csv(file)
 
-        df['Timestamp'] = pd.to_datetime(df['Timestamp'])  
-        df.sort_values(by='Timestamp', inplace=True)  
+        df['Timestamp'] = pd.to_datetime(df['Timestamp'], format='%H.%M.%S').dt.time
+        df.sort_values(by='Timestamp', inplace=True)
+
+
+        df.to_csv(file)
 
 clean_files(basepath)
 dir_path_under(basepath)
