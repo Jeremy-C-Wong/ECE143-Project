@@ -105,35 +105,35 @@ def plot_df(fpath1 : str, fpath2 : str, y_axis='DL_bitrate', day='Day1', subplot
         else: plt.close()
 
 
-# fpath1 = "./5Gdataset-master/Amazon_Prime/Static/Season3-TheExpanse/combined.csv"
-# fpath2 = "./5Gdataset-master/Netflix/Static/Season3-StrangerThings/combined.csv"
+fpath1 = "./5Gdataset-master/Amazon_Prime/Static/Season3-TheExpanse/combined.csv"
+fpath2 = "./5Gdataset-master/Netflix/Static/Season3-StrangerThings/combined.csv"
 
-# fpath3 = "./5Gdataset-master/Amazon_Prime/Driving/Season3-TheExpanse/combined.csv"
-# fpath4 = "./5Gdataset-master/Netflix/Driving/Season3-StrangerThings/combined.csv"
+fpath3 = "./5Gdataset-master/Amazon_Prime/Driving/Season3-TheExpanse/combined.csv"
+fpath4 = "./5Gdataset-master/Netflix/Driving/Season3-StrangerThings/combined.csv"
 
-# fpath5 = "./5Gdataset-master/Netflix/Static/animated-RickandMorty/combined.csv"
-# fpath6 = "./5Gdataset-master/Netflix/Driving/animated-RickandMorty/combined.csv"
+fpath5 = "./5Gdataset-master/Netflix/Static/animated-RickandMorty/combined.csv"
+fpath6 = "./5Gdataset-master/Netflix/Driving/animated-RickandMorty/combined.csv"
 
-# # DL_BITRATE
-# plot_df(fpath1, fpath2, subplots=True)  # Static: Amazon Prime vs. Netflix
-# plot_df(fpath3, fpath4, subplots=True)  # Driving: Amazon Prime vs. Netflix
-# plot_df(fpath1, fpath3)                 # Amazon Prime: Static vs. Driving
-# plot_df(fpath2, fpath4)                 # Netflix: Static vs. Driving
+# DL_BITRATE
+plot_df(fpath1, fpath2, subplots=True)  # Static: Amazon Prime vs. Netflix
+plot_df(fpath3, fpath4, subplots=True)  # Driving: Amazon Prime vs. Netflix
+plot_df(fpath1, fpath3)                 # Amazon Prime: Static vs. Driving
+plot_df(fpath2, fpath4)                 # Netflix: Static vs. Driving
 
-# # RSRQ
-# plot_df(fpath1, fpath2, y_axis='RSRQ')
-# plot_df(fpath3, fpath4, y_axis='RSRQ')
-# plot_df(fpath1, fpath3, y_axis='RSRQ')
-# plot_df(fpath2, fpath4, y_axis='RSRQ')
+# RSRQ
+plot_df(fpath1, fpath2, y_axis='RSRQ')
+plot_df(fpath3, fpath4, y_axis='RSRQ')
+plot_df(fpath1, fpath3, y_axis='RSRQ')
+plot_df(fpath2, fpath4, y_axis='RSRQ')
 
-# # RSRP
-# plot_df(fpath1, fpath2, y_axis='RSRP')
-# plot_df(fpath3, fpath4, y_axis='RSRP')
-# plot_df(fpath1, fpath3, y_axis='RSRP')
-# plot_df(fpath2, fpath4, y_axis='RSRP')
+# RSRP
+plot_df(fpath1, fpath2, y_axis='RSRP')
+plot_df(fpath3, fpath4, y_axis='RSRP')
+plot_df(fpath1, fpath3, y_axis='RSRP')
+plot_df(fpath2, fpath4, y_axis='RSRP')
 
-# # RSSI
-# plot_df(fpath1, fpath2, y_axis='RSSI')
-# plot_df(fpath3, fpath4, y_axis='RSSI')
-# plot_df(fpath1, fpath3, y_axis='RSSI')
-# plot_df(fpath2, fpath4, y_axis='RSSI')
+# RSSI
+plot_df(fpath1, fpath2, y_axis='RSSI')
+plot_df(fpath3, fpath4, y_axis='RSSI')
+plot_df(fpath1, fpath3, y_axis='RSSI')
+plot_df(fpath2, fpath4, y_axis='RSSI')

@@ -78,12 +78,18 @@ Regarding GitHub Repository - Well documented, reusable Python module targeted a
 │           └── Season3-StrangerThings
 │               └── ...
 │
+├── plots                   <- Plots created by data_plot.py
+│   │
+│   ├── Amaz_SvD_DL_bitrate.png
+│   ├── ...
+│   └── Stat_AvN_RSSI.png
+│
 ├── data_cleanup.py         <- Script to clean-up and consolidate data
 │                              within each subdirectory of data folder
 │
 ├── data_plot.py            <- Script to plot data from certain combined.csv files
 │
-├── generated_visualizations.ipynb          <- Jupyter notebook containing visualizations 
+├── generated_visualizations.ipynb          <- Jupyter notebook that creates visualizations 
 │                                              generated for presentation
 └── [insert PPTX file name here]            <- PPT of presentation
 
