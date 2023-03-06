@@ -89,9 +89,10 @@ Regarding GitHub Repository - Well documented, reusable Python module targeted a
 │
 ├── data_plot.py            <- Script to plot data from certain combined.csv files
 │
-├── generated_visualizations.ipynb          <- Jupyter notebook that creates visualizations 
-│                                              generated for presentation
+├── generated_visualizations.ipynb          <- Jupyter notebook that creates  
+│                                              visualizations for presentation
 └── [insert PPTX file name here]            <- PPT of presentation
+
 
 Additional template below
 
