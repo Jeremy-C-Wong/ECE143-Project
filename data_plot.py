@@ -47,14 +47,21 @@ def plot_df(fpath1 : str, fpath2 : str, y_axis='DL_bitrate', day='Day1', subplot
         day (str): Day number to use
         subplots (boolean): False if plotting single plot, True if plotting 2x2 grid of plots
         show (boolean): True if showing plot, False otherwise
-        columns (list(str)): name of columns to use in plots
+        columns (list(str)): names of columns to use in plots
     '''
+
+    assert isinstance(fpath1, str) and isinstance(fpath2, str)
+    assert '.csv' in fpath1 and '.csv' in fpath2
+    assert 'Day' in columns and 'Timestamp' in columns and y_axis in columns
 
     plt.rcParams["figure.figsize"] = [15.00, 5.00]
     plt.rcParams["figure.autolayout"] = True
 
     df1 = pd.read_csv(fpath1, usecols=columns)
     df2 = pd.read_csv(fpath2, usecols=columns)
+
+    assert y_axis in df1.columns and y_axis in df2.columns
+    assert day in df1.Day.values and day in df2.Day.values
 
     legend, title, fig_name = get_plot_labels(fpath1, fpath2)
 
