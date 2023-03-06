@@ -121,8 +121,24 @@ Additional template below
         └── visualize.py
 ```
 
-## How to Use
+## How to Run
 
+*Note: the output files (e.g. the cleaned data files and the plots) already exist in the repository, so the following steps are simply to describe the process as if they had not already been generated. If desired, you can remove the PNG files in the `plots` subdirectory, along with the `_cleaned.csv` and `combined.csv` files in each of the subdirectories of `5Gdataset-master`.*
+
+First, navigate to the ECE143-Project directory.
+
+Run `data_cleanup.py` to create cleaned and combined CSV files.
+
+Following the previous step, there are two options for generating the plots:
+1. Run `data_plot.py` to save all the plot figures into the `plots` subdirectory without showing the plots.
+2. Run each cell in `generated_visualizations.ipynb` to show the plots in the output plots of each cell in the Jupyter Notebook (while also saving the plot figures into the aforementioned `plots` subdirectory).
+
+If you wish to plot datasets or y-axis values not plotted in `data_plot.py` or `generated_visualizations.ipynb`, simply change or add the desired file paths at the top of these files and use as parameters to the `plot_df` function. Other parameters you can pass into `plot_df` are as follows:
+* `y_axis (str)`: the column name to use for the y-axis of the plot(s); default is DL_bitrate
+* `day (str)`: the day to use for the plot; default is 'Day1'; ignores this argument if `subplots == True`
+* `subplots (boolean)`: plots only one plot if set to `False`, otherwise plots a 2x2 grid of subplots from Day 1 through Day 4 (assuming there are at least four days in the dataset); default is `False`
+* `show (boolean)`: shows the figure if set to `False`, otherwise closes the figure; default is `False`
+* `columns (list(str))`: the list of column names that will be accessed in the function call; default is `['Day','Timestamp','DL_bitrate','RSRQ','RSRP','RSSI']`
 
 `[Insert code]`
 
