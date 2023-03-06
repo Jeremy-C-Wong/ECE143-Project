@@ -2,7 +2,8 @@
 
 # Cellular Key Performance Indicators (KPIs) Analysis and Comparison
 
-[Insert brief description of project]
+*Comparing the key performance indicators (KPIs) of a mobile network for different streaming services (Amazon Prime and Netflix) and mobility statuses (static and driving).*
+
 
 **[TO-DO]**
 
@@ -29,8 +30,6 @@ Regarding GitHub Repository - Well documented, reusable Python module targeted a
 │   │   │   ├── animated-AdventureTime      <- Data collected from watching animated show
 │   │   │   │   ├── B_2019.11.28_07.27.57_cleaned.csv
 │   │   │   │   ├── B_2019.11.28_07.27.57.csv
-│   │   │   │   ├── B_2019.11.28_10.14.25_cleaned.csv
-│   │   │   │   ├── B_2019.11.28_10.14.25.csv
 │   │   │   │   ├── ...
 │   │   │   │   └── combined.csv            <- Cleaned and combined data from directory
 │   │   │   │
@@ -43,87 +42,40 @@ Regarding GitHub Repository - Well documented, reusable Python module targeted a
 │   │   └── Static          <- Data collected while stationary 
 │   │       │                  (subdirectories follow same convention as Driving)
 │   │       ├── animated-Ninjago
-│   │       │   ├── B_2020.01.06_09.55.13_cleaned.csv
-│   │       │   ├── B_2020.01.06_09.55.13.csv
-│   │       │   ├── ...
-│   │       │   └── combined.csv
-│   │       │
 │   │       └── Season3-TheExpanse
-│   │           ├── ...
-│   │           └── combined.csv
 │   │
-│   ├── Download            <- Data collected when downloading content
-│   │   │
+│   ├── Download            <- Data collected when downloading content - not show-specific
 │   │   ├── Driving
-│   │   │   └── ...
-│   │   │
 │   │   └── Static
-│   │       └── ...
 │   │
 |   └── Netflix             <- Data collected using Netflix 
 |       │                      (subdirectories follow same convention as Amazon Prime) 
 │       ├── Driving
-│       │   │
 │       │   ├── animated-RickandMorty
-│       │   │   └── ...
-│       │   │
 │       │   └── Season3-StrangerThings
-│       │       └── ...
 │       │
 │       └── Static
-│           │
 │           ├── animated-RickandMorty
-│           │   └── ...
-│           │
 │           └── Season3-StrangerThings
-│               └── ...
 │
 ├── plots                   <- Plots created by data_plot.py
-│   │
 │   ├── Amaz_SvD_DL_bitrate.png
 │   ├── ...
 │   └── Stat_AvN_RSSI.png
 │
-├── data_cleanup.py         <- Script to clean-up and consolidate data
-│                              within each subdirectory of data folder
+├── data_cleanup.py         <- Script to clean-up and consolidate data within
+│                              each subdirectory of 5Gdataset-master folder
 │
 ├── data_plot.py            <- Script to plot data from certain combined.csv files
 │
 ├── generated_visualizations.ipynb          <- Jupyter notebook that creates  
 │                                              visualizations for presentation
 └── [insert PPTX file name here]            <- PPT of presentation
-
-
-Additional template below
-
-│
-├── references         <- Data dictionaries, manuals, and all other explanatory materials.
-│
-├── reports            <- Generated analysis as HTML, PDF, LaTeX, etc.
-│   └── figures        <- Generated graphics and figures to be used in reporting
-│
-├── requirements.txt   <- The requirements file for reproducing the analysis environment
-│
-└── da-project         <- Source code for use in this project.
-    │
-    ├── data           <- Scripts to download or generate data
-    │   └── make_dataset.py
-    │
-    ├── features       <- Scripts to turn raw data into features for modeling
-    │   └── build_features.py
-    │
-    ├── models         <- Scripts to train models and then use trained models to make
-    │   │                 predictions
-    │   ├── predict_model.py
-    │   └── train_model.py
-    │
-    └── visualization  <- Scripts to create exploratory and results oriented visualizations
-        └── visualize.py
 ```
 
 ## How to Run
 
-*Note: the output files (e.g. the cleaned data files and the plots) already exist in the repository, so the following steps are simply to describe the process as if they had not already been generated. If desired, you can remove the PNG files in the `plots` subdirectory, along with the `_cleaned.csv` and `combined.csv` files in each of the subdirectories of `5Gdataset-master`.*
+> Note: the output files (e.g. the cleaned data files and the plots) already exist in the repository, so the following steps are simply to describe the process as if they had not already been generated. If desired, you can remove the PNG files in the `plots` subdirectory, along with the `_cleaned.csv` and `combined.csv` files in each of the subdirectories of `5Gdataset-master`.
 
 First, navigate to the ECE143-Project directory.
 
@@ -138,9 +90,7 @@ If you wish to plot datasets or y-axis values not plotted in `data_plot.py` or `
 * `day (str)`: the day to use for the plot; default is 'Day1'; ignores this argument if `subplots == True`
 * `subplots (boolean)`: plots only one plot if set to `False`, otherwise plots a 2x2 grid of subplots from Day 1 through Day 4 (assuming there are at least four days in the dataset); default is `False`
 * `show (boolean)`: shows the figure if set to `False`, otherwise closes the figure; default is `False`
-* `columns (list(str))`: the list of column names that will be accessed in the function call; default is `['Day','Timestamp','DL_bitrate','RSRQ','RSRP','RSSI']`
-
-`[Insert code]`
+* `columns (list(str))`: the list of column names that will be accessed in the function call; default is `['Day','Timestamp','DL_bitrate','RSRQ','RSRP','RSSI']`; requires `'Day'`, `'Timestamp'`, and `y_axis` at minimum
 
 ## Third-Party Modules
 * NumPy
