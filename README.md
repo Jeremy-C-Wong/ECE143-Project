@@ -88,8 +88,8 @@ Following the previous step, there are two options for generating the plots:
 If you wish to plot datasets or y-axis values not plotted in `data_plot.py` or `generated_visualizations.ipynb`, simply change or add the desired file paths at the top of these files and use as parameters to the `plot_df` function. Other parameters you can pass into `plot_df` are as follows:
 * `y_axis (str)`: the column name to use for the y-axis of the plot(s); default is DL_bitrate
 * `day (str)`: the day to use for the plot; default is 'Day1'; ignores this argument if `subplots == True`
-* `subplots (boolean)`: plots only one plot if set to `False`, otherwise plots a 2x2 grid of subplots from Day 1 through Day 4 (assuming there are at least four days in the dataset); default is `False`
-* `show (boolean)`: shows the figure if set to `False`, otherwise closes the figure; default is `False`
+* `subplots (bool)`: plots only one plot if set to `False`, otherwise plots a 2x2 grid of subplots from Day 1 through Day 4 (assuming there are at least four days in the dataset); default is `False`
+* `show (bool)`: shows the figure if set to `False`, otherwise closes the figure; default is `False`
 * `columns (list(str))`: the list of column names that will be accessed in the function call; default is `['Day','Timestamp','DL_bitrate','RSRQ','RSRP','RSSI']`; requires `'Day'`, `'Timestamp'`, and `y_axis` at minimum
 
 ## Third-Party Modules
