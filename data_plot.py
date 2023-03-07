@@ -6,6 +6,7 @@ import time
 import numpy as np
 import scipy as sp
 
+
 def get_plot_labels(fpath1 : str, fpath2 : str):
     '''
     Determine labels for plot using filepath names
@@ -54,7 +55,7 @@ def plot_df(fpath1 : str, fpath2 : str, y_axis='DL_bitrate', day='Day1', subplot
     assert '.csv' in fpath1 and '.csv' in fpath2
     assert 'Day' in columns and 'Timestamp' in columns and y_axis in columns
 
-    plt.rcParams["figure.figsize"] = [15.00, 5.00]
+    plt.rcParams["figure.figsize"] = [25.00, 10.00]
     plt.rcParams["figure.autolayout"] = True
 
     df1 = pd.read_csv(fpath1, usecols=columns)
@@ -76,27 +77,49 @@ def plot_df(fpath1 : str, fpath2 : str, y_axis='DL_bitrate', day='Day1', subplot
                 # Find minimum number of rows between df1 and df2
                 min_rows = min(df1.loc[df1.Day==day].count()[0],df2.loc[df2.Day==day].count()[0])
                 # Plot first dataframe
-                ax = df1.loc[df1.Day==day].head(min_rows).plot(x='Timestamp',y=y_axis,ax=axes[i,j])
+                #ax = df1.loc[df1.Day==day].head(min_rows).plot(x='Timestamp',y=y_axis,ax=axes[i,j])
+                df1_n = df1.loc[df1.Day==day].head(min_rows)
+                df2_n = df2.loc[df2.Day==day].head(min_rows)
+                ax = df1_n.plot(x='Timestamp',y=y_axis,ax=axes[i,j])
+                x_text = df1_n.shape[0]
+                y1_text = max(df1_n[y_axis])
+                y2_text = max(df2_n[y_axis])
+                y_text = max(y1_text,y2_text)
+                avg_str1 = str.format('Avg :'+(legend[0].split(' '))[0]+ ': {0}',(round(df1_n[y_axis].mean() ,2)))
+                avg_str2 = str.format('Avg :'+legend[1]+ ': {0}',(round(df2_n[y_axis].mean(), 2)))
+                ax.text(0.85*(x_text),0.85*(y_text), avg_str1 , fontsize=10, color = 'steelblue', weight = 'bold')
+                ax.text(0.85*(x_text),0.81*(y_text), avg_str2 , fontsize=10, color= 'darkorange',weight = 'bold' )
 
                 # USE FOR RUNNING AVERAGE - type = list
                 temp = df1.loc[df1.Day==day].head(min_rows).values.tolist()
 
                 # Plot second dataframe on same axis as first
-                df2.loc[df2.Day==day].head(min_rows).plot(ax=ax,x='Timestamp',y=y_axis)
+                df2_n.plot(ax=ax,x='Timestamp',y=y_axis)
                 # Set subplot axis labels, title, and legend
                 axes[i,j].set(xlabel=day.replace('Day', 'Day '),ylabel=y_axis,title=title+y_axis)
                 axes[i,j].legend(legend)
 
         # Saves into plots subdirectory in format <constant value>_<comparison_values>_<y_value>.png
         # e.g. Amaz_SvD_RSRP.png where it compares RSRP values of Static and Driving for Amazon Prime
-        plt.savefig('./plots/{fname}{y_name}_subplots.png'.format(fname=fig_name, y_name=y_axis), dpi=640)
+        plt.savefig('./plots/{fname}{y_name}_subplots.png'.format(fname=fig_name, y_name=y_axis), dpi=860)
         if show: plt.show()
         else: plt.close()
 
     else:
         # Find minimum number of rows between df1 and df2
         min_rows = min(df1.loc[df1.Day==day].count()[0],df2.loc[df2.Day==day].count()[0])
-        ax = df1.loc[df1.Day==day].head(min_rows).plot(x='Timestamp',y=y_axis)
+        df1_n = df1.loc[df1.Day==day].head(min_rows)
+        df2_n = df2.loc[df2.Day==day].head(min_rows)
+        ax = df1_n.plot(x='Timestamp',y=y_axis)
+        x_text = df1_n.shape[0]
+        y1_text = max(df1_n[y_axis])
+        y2_text = max(df2_n[y_axis])
+        y_text = max(y1_text,y2_text)
+        
+        avg_str1 = str.format('Avg :'+(legend[0].split(' '))[0]+ ': {0}',(round(df1_n[y_axis].mean() ,2)))
+        avg_str2 = str.format('Avg :'+legend[1]+ ': {0}',(round(df2_n[y_axis].mean(), 2)))
+        ax.text(0.85*(x_text),0.85*(y_text), avg_str1 , fontsize=10, color = 'steelblue', weight = 'bold')
+        ax.text(0.85*(x_text),0.81*(y_text), avg_str2 , fontsize=10, color= 'darkorange', weight = 'bold')
 
         # USE FOR RUNNING AVERAGE - type = list
         temp = df1.loc[df1.Day==day].head(min_rows).values.tolist()
@@ -107,7 +130,7 @@ def plot_df(fpath1 : str, fpath2 : str, y_axis='DL_bitrate', day='Day1', subplot
         plt.ylabel(y_axis)
         plt.title(title+y_axis, fontsize=8)
         plt.legend(legend)
-        plt.savefig('./plots/{fname}{y_name}.png'.format(fname=fig_name, y_name=y_axis), dpi=640)
+        plt.savefig('./plots/{fname}{y_name}.png'.format(fname=fig_name, y_name=y_axis), dpi=860)
         if show: plt.show()
         else: plt.close()
 
@@ -122,25 +145,26 @@ fpath5 = "./5Gdataset-master/Netflix/Static/animated-RickandMorty/combined.csv"
 fpath6 = "./5Gdataset-master/Netflix/Driving/animated-RickandMorty/combined.csv"
 
 # DL_BITRATE
-plot_df(fpath1, fpath2, subplots=True)  # Static: Amazon Prime vs. Netflix
-plot_df(fpath3, fpath4, subplots=True)  # Driving: Amazon Prime vs. Netflix
-plot_df(fpath1, fpath3)                 # Amazon Prime: Static vs. Driving
-plot_df(fpath2, fpath4)                 # Netflix: Static vs. Driving
+# plot_df(fpath1, fpath2, subplots=True)  # Static: Amazon Prime vs. Netflix
+# plot_df(fpath3, fpath4, subplots=True)  # Driving: Amazon Prime vs. Netflix
+# plot_df(fpath1, fpath3, subplots=True)  # Amazon Prime: Static vs. Driving
+# plot_df(fpath2, fpath4, subplots=True)  # Netflix: Static vs. Driving
 
-# RSRQ
-plot_df(fpath1, fpath2, y_axis='RSRQ')
-plot_df(fpath3, fpath4, y_axis='RSRQ')
-plot_df(fpath1, fpath3, y_axis='RSRQ')
-plot_df(fpath2, fpath4, y_axis='RSRQ')
+# # RSRQ
+# plot_df(fpath1, fpath2, y_axis='RSRQ')
+# plot_df(fpath3, fpath4, y_axis='RSRQ')
+# plot_df(fpath1, fpath3, y_axis='RSRQ')
+# plot_df(fpath2, fpath4, y_axis='RSRQ')
 
-# RSRP
+# # RSRP
 plot_df(fpath1, fpath2, y_axis='RSRP')
 plot_df(fpath3, fpath4, y_axis='RSRP')
-plot_df(fpath1, fpath3, y_axis='RSRP')
-plot_df(fpath2, fpath4, y_axis='RSRP')
+# plot_df(fpath1, fpath3, y_axis='RSRP')
+# plot_df(fpath2, fpath4, y_axis='RSRP')
 
-# RSSI
-plot_df(fpath1, fpath2, y_axis='RSSI')
-plot_df(fpath3, fpath4, y_axis='RSSI')
-plot_df(fpath1, fpath3, y_axis='RSSI')
-plot_df(fpath2, fpath4, y_axis='RSSI')
+# # RSSI
+# plot_df(fpath1, fpath2, y_axis='RSSI')
+# plot_df(fpath3, fpath4, y_axis='RSSI')
+# plot_df(fpath1, fpath3, y_axis='RSSI')
+# plot_df(fpath2, fpath4, y_axis='RSSI')
+
