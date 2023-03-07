@@ -110,21 +110,34 @@ def plot_df(fpath1 : str, fpath2 : str, y_axis='DL_bitrate', day='Day1', subplot
         min_rows = min(df1.loc[df1.Day==day].count()[0],df2.loc[df2.Day==day].count()[0])
         df1_n = df1.loc[df1.Day==day].head(min_rows)
         df2_n = df2.loc[df2.Day==day].head(min_rows)
-        ax = df1_n.plot(x='Timestamp',y=y_axis)
+        df1_n['Rolling_avg']=df1_n[y_axis].rolling(20).mean()  
+        df2_n['Rolling_avg']=df2_n[y_axis].rolling(20).mean() 
+
+        ax = df1_n.plot(x='Timestamp',y=y_axis,linewidth= 1)
         x_text = df1_n.shape[0]
         y1_text = max(df1_n[y_axis])
         y2_text = max(df2_n[y_axis])
         y_text = max(y1_text,y2_text)
-        
+
         avg_str1 = str.format('Avg :'+(legend[0].split(' '))[0]+ ': {0}',(round(df1_n[y_axis].mean() ,2)))
         avg_str2 = str.format('Avg :'+legend[1]+ ': {0}',(round(df2_n[y_axis].mean(), 2)))
-        ax.text(0.85*(x_text),0.85*(y_text), avg_str1 , fontsize=10, color = 'steelblue', weight = 'bold')
-        ax.text(0.85*(x_text),0.81*(y_text), avg_str2 , fontsize=10, color= 'darkorange', weight = 'bold')
 
-        # USE FOR RUNNING AVERAGE - type = list
-        temp = df1.loc[df1.Day==day].head(min_rows).values.tolist()
+        if y_text >0:
+            ax.text(0.85*(x_text),0.85*(y_text), avg_str1 , fontsize=10, color = 'steelblue', weight = 'bold')
+            ax.text(0.85*(x_text),0.81*(y_text), avg_str2 , fontsize=10, color= 'darkorange', weight = 'bold')
+        else:
+            yt1 = -(0.5*((min(y1_text,y2_text)) - y_text))
+            yt2 = -(0.7*((min(y1_text,y2_text)) - y_text))
+            ax.text(0.95*(x_text),y_text-yt1, avg_str1 , fontsize=10, color = 'steelblue', weight = 'bold')
+            ax.text(0.95*(x_text),y_text-yt2, avg_str2 , fontsize=10, color= 'darkorange', weight = 'bold')
 
-        df2.loc[df2.Day==day].head(min_rows).plot(ax=ax,x='Timestamp',y=y_axis)
+        # # USE FOR RUNNING AVERAGE - type = list
+        # temp = df1.loc[df1.Day==day].head(min_rows).values.tolist()
+
+        df2.loc[df2.Day==day].head(min_rows).plot(ax=ax,x='Timestamp',y=y_axis,linewidth= 1)
+        df1_n.loc[df1_n.Day==day].head(min_rows).plot(ax=ax,x='Timestamp',y='Rolling_avg',linewidth= 2.5)
+        df2_n.loc[df2_n.Day==day].head(min_rows).plot(ax=ax,x='Timestamp',y='Rolling_avg', linewidth= 2.5)
+
         # Set plot labels, title, legend
         plt.xlabel(day)
         plt.ylabel(y_axis)
@@ -147,6 +160,7 @@ fpath6 = "./5Gdataset-master/Netflix/Driving/animated-RickandMorty/combined.csv"
 # DL_BITRATE
 # plot_df(fpath1, fpath2, subplots=True)  # Static: Amazon Prime vs. Netflix
 # plot_df(fpath3, fpath4, subplots=True)  # Driving: Amazon Prime vs. Netflix
+
 # plot_df(fpath1, fpath3, subplots=True)  # Amazon Prime: Static vs. Driving
 # plot_df(fpath2, fpath4, subplots=True)  # Netflix: Static vs. Driving
 
@@ -167,4 +181,5 @@ plot_df(fpath3, fpath4, y_axis='RSRP')
 # plot_df(fpath3, fpath4, y_axis='RSSI')
 # plot_df(fpath1, fpath3, y_axis='RSSI')
 # plot_df(fpath2, fpath4, y_axis='RSSI')
+
 
