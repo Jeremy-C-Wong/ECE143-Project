@@ -1,11 +1,5 @@
 import matplotlib.pyplot as plt
-import pandas
-import csv
 import pandas as pd
-import time
-import numpy as np
-import scipy as sp
-
 
 def get_plot_labels(fpath1 : str, fpath2 : str, subplots : bool):
     '''
@@ -61,17 +55,15 @@ def plot_df(fpath1 : str, fpath2 : str, y_axis='DL_bitrate', day='Day1', subplot
     assert '.csv' in fpath1 and '.csv' in fpath2
     assert 'Day' in columns and 'Timestamp' in columns and y_axis in columns
 
-    plt.rcParams["figure.figsize"] = [25.00, 10.00]
-    plt.rcParams["figure.autolayout"] = True
-
     df1 = pd.read_csv(fpath1, usecols=columns)
     df2 = pd.read_csv(fpath2, usecols=columns)
-
     assert y_axis in df1.columns and y_axis in df2.columns
     assert day in df1.Day.values and day in df2.Day.values
 
-    legend, title, fig_name, comparison = get_plot_labels(fpath1, fpath2, subplots)
+    plt.rcParams["figure.figsize"] = [25.00, 10.00]
+    plt.rcParams["figure.autolayout"] = True
 
+    legend, title, fig_name, comparison = get_plot_labels(fpath1, fpath2, subplots)
     # Create dictionary for units corresponding to each value and assign value and unit to y_label
     units = {'DL_bitrate': 'kbps', 'RSRQ': 'dB', 'RSRP': 'dBm', 'RSSI': 'dBm'}
     y_label = '{y} ({u})'.format(y=y_axis, u=units[y_axis])
@@ -79,22 +71,22 @@ def plot_df(fpath1 : str, fpath2 : str, y_axis='DL_bitrate', day='Day1', subplot
     if subplots:
         # Set up 2x2 grid of subplots
         fig, axes = plt.subplots(nrows=2, ncols=2)
-
-        x_dist = 0.855  # x-axis coordinate for displaying text
+        # x-axis coordinate for displaying text in terms of Axes coordinates (x: [0,1])
+        x_dist = 0.855
+        if comparison == 'mobility pattern': x_dist = 0.90
         # Iterate through each row and column of grid
         for i in range(2):
             for j in range(2):
                 # Set day number based on row and column number
                 day = '{d}{n}'.format(d=day[:-1], n=2*i+j+1)
                 # Find minimum number of rows between df1 and df2
-                min_rows = min(df1.loc[df1.Day==day].count()[0],df2.loc[df2.Day==day].count()[0])
+                min_rows = min(df1.loc[df1.Day==day].count()[0], df2.loc[df2.Day==day].count()[0])
                 # Plot values from datasets
                 ax = df1.loc[df1.Day==day].head(min_rows).plot(x='Timestamp', y=y_axis, ax=axes[i,j])
                 df2.loc[df2.Day==day].head(min_rows).plot(ax=ax, x='Timestamp', y=y_axis)
                 # Calculate and display averages of the y-values for each dataset over the given time period
-                avg_str1 = 'Avg. {l0}: {val} {u}'.format(l0=legend[0].split(' ')[0], val=round(df1[y_axis].mean(), 2), u=units[y_axis])
-                avg_str2 = 'Avg. {l1}: {val} {u}'.format(l1=legend[1], val=round(df2[y_axis].mean(), 2), u=units[y_axis])
-                if comparison == 'mobility pattern': x_dist = 0.90
+                avg_str1 = 'Avg. {l0}: {val} {u}'.format(l0=legend[0].split(' ')[0], val=round(df1.loc[df1.Day==day][y_axis].mean(), 2), u=units[y_axis])
+                avg_str2 = 'Avg. {l1}: {val} {u}'.format(l1=legend[1], val=round(df2.loc[df2.Day==day][y_axis].mean(), 2), u=units[y_axis])
                 ax.text(x_dist, 0.94, avg_str1, fontsize=10, color='steelblue', weight='bold', horizontalalignment='right', transform=ax.transAxes)
                 ax.text(x_dist, 0.89, avg_str2, fontsize=10, color='darkorange', weight='bold', horizontalalignment='right', transform=ax.transAxes)
                 # Set subplot axis labels, title, and legend
@@ -109,6 +101,7 @@ def plot_df(fpath1 : str, fpath2 : str, y_axis='DL_bitrate', day='Day1', subplot
 
     else:
         x_dist = 0.895
+        if comparison == 'mobility pattern': x_dist = 0.915
         min_rows = min(df1.loc[df1.Day==day].count()[0], df2.loc[df2.Day==day].count()[0])
         # Adding rolling average column to the dataframes
         df1['Rolling_avg'] = df1[y_axis].rolling(20).mean()
@@ -119,15 +112,12 @@ def plot_df(fpath1 : str, fpath2 : str, y_axis='DL_bitrate', day='Day1', subplot
         df1.loc[df1.Day==day].head(min_rows).plot(ax=ax, x='Timestamp', y='Rolling_avg', linewidth=2.5)
         df2.loc[df2.Day==day].head(min_rows).plot(ax=ax, x='Timestamp', y='Rolling_avg', linewidth=2.5)
         # Calculate and display averages of the y-values for each dataset over the given time period
-        avg_str1 = 'Avg. {l0}: {val} {u}'.format(l0=legend[0].split(' ')[0], val=round(df1[y_axis].mean(), 2), u=units[y_axis])
-        avg_str2 = 'Avg. {l1}: {val} {u}'.format(l1=legend[1], val=round(df2[y_axis].mean(), 2), u=units[y_axis])
-        if comparison == 'mobility pattern': x_dist = 0.915
+        avg_str1 = 'Avg. {l0}: {val} {u}'.format(l0=legend[0].split(' ')[0], val=round(df1.loc[df1.Day==day][y_axis].mean(), 2), u=units[y_axis])
+        avg_str2 = 'Avg. {l1}: {val} {u}'.format(l1=legend[1], val=round(df2.loc[df2.Day==day][y_axis].mean(), 2), u=units[y_axis])
         ax.text(x_dist, 0.97, avg_str1, fontsize=10, color='steelblue', weight='bold', horizontalalignment='right', transform=ax.transAxes)
         ax.text(x_dist, 0.95, avg_str2, fontsize=10, color='darkorange', weight='bold', horizontalalignment='right', transform=ax.transAxes)
         # Set plot labels, title, legend
-        plt.xlabel(day)
-        plt.ylabel(y_label)
-        plt.title(title+y_axis, fontsize=12)
+        ax.set(xlabel=day, ylabel=y_label, title=title+y_axis)
         plt.legend(legend, loc='upper right')
 
         plt.savefig('./plots/{fname}{y_name}.png'.format(fname=fig_name, y_name=y_axis), dpi=860)

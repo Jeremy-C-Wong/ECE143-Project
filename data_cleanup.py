@@ -2,7 +2,6 @@ import pandas as pd
 import numpy as np
 import glob
 import os
-import time
 import datetime as dt
 
 def clean_files(basepath):
@@ -19,8 +18,6 @@ def clean_files(basepath):
 
         # Try to add empty columns to use later and remove unnecessary columns (labels)
         try:    
-            df.insert(1,'Timeframe','')
-            df.insert(0,'Day_Timeframe','')
             df.insert(0,'Day','')
             df.insert(0,'Date','')
             cleaned = df.drop(['Latitude','Longitude','Operatorname','CellID','PINGAVG','PINGMIN','PINGMAX','PINGSTDEV','PINGLOSS','CELLHEX','NODEHEX','LACHEX','RAWCELLID','NRxRSRP','NRxRSRQ'],axis=1)
@@ -28,22 +25,14 @@ def clean_files(basepath):
         except ValueError or KeyError:
             continue
 
-        # Iterate through each index of the DateFrame
-        for x in cleaned.index:
-            # Get date (YYYY.MM.DD) and time (HH.MM.SS) from Timestamp label
-            timestamp_date = cleaned.loc[x,'Timestamp'].split('_')[0]
-            timestamp_time = cleaned.loc[x,'Timestamp'].split('_')[1]
-            # Set date column to date and timestamps to only time (remove the date)
-            cleaned.loc[x,'Date'] = timestamp_date
-            cleaned.loc[x,'Timestamp'] = timestamp_time  
-            # Remove any rows with State 'I' (idle state)   
-            if cleaned.loc[x,'State'] == 'I':
-                cleaned.drop(x,inplace=True)
-                continue
-            # Remove any rows with download bitrate values that fall below threshold
-            if cleaned.loc[x,'DL_bitrate'] <= 10:
-                cleaned.drop(x,inplace=True)
-                continue
+        # Remove values when state is idle and when bitrate falls below threshold
+        cleaned = cleaned[cleaned.State != 'I']
+        cleaned = cleaned[cleaned.DL_bitrate > 10]
+        # Split the Timestamp column into time and date columns
+        cleaned[['Date','Timestamp']] = cleaned.Timestamp.str.split('_', expand=True)
+        # Replace '-' with minimum values for RSSI and RSRQ
+        cleaned['RSRQ'] = cleaned['RSRQ'].replace('-', -19.5)
+        cleaned['RSSI'] = cleaned['RSSI'].replace('-', -110)
             
         # Create new file name by appending _cleaned before the .csv file extension
         new_name = file.removesuffix('.csv') + '_cleaned.csv'
@@ -113,10 +102,6 @@ def set_day_nums(basepath):
         # Re-order indices
         df.reset_index(drop=True, inplace=True)
 
-        # Replace '-' with minimum values for RSSI and RSRQ
-        df['RSRQ'] = df['RSRQ'].replace('-', -19.5)
-        df['RSSI'] = df['RSSI'].replace('-', -110)
-
         df.to_csv(file)
 
 def convert_datetimes(basepath):
@@ -137,6 +122,7 @@ def convert_datetimes(basepath):
         df.sort_values(by='Timestamp', inplace=True)
 
         df.to_csv(file)
+
 
 basepath = './5Gdataset-master'
 

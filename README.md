@@ -83,7 +83,7 @@ Run `data_cleanup.py` to create cleaned and combined CSV files.
 
 Following the previous step, there are two options for generating the plots:
 1. Run `data_plot.py` to save all the plot figures into the `plots` subdirectory without showing the plots.
-2. Run each cell in `generated_visualizations.ipynb` to show the plots in the output plots of each cell in the Jupyter Notebook (while also saving the plot figures into the aforementioned `plots` subdirectory).
+2. Run each cell in `generated_visualizations.ipynb`, starting with the first cell that contains `from data_plot import plot_df`, to show the plots in the output plots of each cell in the Jupyter Notebook (while also saving the plot figures into the aforementioned `plots` subdirectory).
 
 If you wish to plot datasets or y-axis values not plotted in `data_plot.py` or `generated_visualizations.ipynb`, simply change or add the desired file paths at the top of these files and use as parameters to the `plot_df` function. Other parameters you can pass into `plot_df` are as follows:
 * `y_axis (str)`: the column name to use for the y-axis of the plot(s); default is DL_bitrate
