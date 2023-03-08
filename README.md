@@ -4,6 +4,7 @@
 
 *Comparing the key performance indicators (KPIs) of a mobile network for different streaming services (Amazon Prime and Netflix) and mobility statuses (static and driving).*
 
+*Dataset: [GitHub: uccmisl / 5Gdataset](https://github.com/uccmisl/5Gdataset)*
 
 **[TO-DO]**
 
@@ -70,7 +71,7 @@ Regarding GitHub Repository - Well documented, reusable Python module targeted a
 │
 ├── generated_visualizations.ipynb          <- Jupyter notebook that creates  
 │                                              visualizations for presentation
-└── [insert PPTX file name here]            <- PPT of presentation
+└── [insert PDF file name here]             <- PDF of presentation
 ```
 
 ## How to Run
@@ -95,3 +96,7 @@ If you wish to plot datasets or y-axis values not plotted in `data_plot.py` or `
 ## Third-Party Modules
 * NumPy
 * Pandas
+
+## Sources
+
+*[D. Raca, D. Leahy, C.J. Sreenan and J.J. Quinlan. Beyond Throughput, The Next Generation: A 5G Dataset with Channel and Context Metrics. ACM Multimedia Systems Conference (MMSys), Istanbul, Turkey. June 8-11, 2020.](https://dl.acm.org/doi/abs/10.1145/3339825.3394938)*
