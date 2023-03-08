@@ -133,8 +133,6 @@ fpath2 = "./5Gdataset-master/Netflix/Static/Season3-StrangerThings/combined.csv"
 fpath3 = "./5Gdataset-master/Amazon_Prime/Driving/Season3-TheExpanse/combined.csv"
 fpath4 = "./5Gdataset-master/Netflix/Driving/Season3-StrangerThings/combined.csv"
 
-fpath5 = "./5Gdataset-master/Netflix/Static/animated-RickandMorty/combined.csv"
-fpath6 = "./5Gdataset-master/Netflix/Driving/animated-RickandMorty/combined.csv"
 
 # DL_BITRATE
 plot_df(fpath1, fpath2, subplots=True)  # Static: Amazon Prime vs. Netflix
@@ -142,20 +140,14 @@ plot_df(fpath3, fpath4, subplots=True)  # Driving: Amazon Prime vs. Netflix
 plot_df(fpath1, fpath3, subplots=True)  # Amazon Prime: Static vs. Driving
 plot_df(fpath2, fpath4, subplots=True)  # Netflix: Static vs. Driving
 
-# RSRQ
-plot_df(fpath1, fpath2, y_axis='RSRQ')  # Static: Amazon Prime vs. Netflix
-# plot_df(fpath3, fpath4, y_axis='RSRQ')
-plot_df(fpath1, fpath3, y_axis='RSRQ')  # Amazon Prime: Static vs. Driving
-# plot_df(fpath2, fpath4, y_axis='RSRQ')
+# # RSSI // Signal Strength
+plot_df(fpath1, fpath3, y_axis='RSSI')
+plot_df(fpath2, fpath4, y_axis='RSSI')
 
-# RSRP
-# plot_df(fpath1, fpath2, y_axis='RSRP')
-# plot_df(fpath3, fpath4, y_axis='RSRP')
-plot_df(fpath1, fpath3, y_axis='RSRP')  # Amazon Prime: Static vs. Driving
-plot_df(fpath2, fpath4, y_axis='RSRP')  # Netflix: Static vs. Driving
+# RSRQ // Signal Quality
+plot_df(fpath1, fpath2, y_axis='RSRQ')
+plot_df(fpath1, fpath3, y_axis='RSRQ')
 
-# RSSI
-# plot_df(fpath1, fpath2, y_axis='RSSI')
-# plot_df(fpath3, fpath4, y_axis='RSSI')
-plot_df(fpath1, fpath3, y_axis='RSSI')  # Amazon Prime: Static vs. Driving
-plot_df(fpath2, fpath4, y_axis='RSSI')  # Netflix: Static vs. Driving
+# RSRP // Signal Power
+plot_df(fpath1, fpath3, y_axis='RSRP')
+plot_df(fpath2, fpath4, y_axis='RSRP')
