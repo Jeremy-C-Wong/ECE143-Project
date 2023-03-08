@@ -140,7 +140,7 @@ plot_df(fpath3, fpath4, subplots=True)  # Driving: Amazon Prime vs. Netflix
 plot_df(fpath1, fpath3, subplots=True)  # Amazon Prime: Static vs. Driving
 plot_df(fpath2, fpath4, subplots=True)  # Netflix: Static vs. Driving
 
-# # RSSI // Signal Strength
+# RSSI // Signal Strength
 plot_df(fpath1, fpath3, y_axis='RSSI')
 plot_df(fpath2, fpath4, y_axis='RSSI')
 
