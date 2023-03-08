@@ -143,19 +143,19 @@ plot_df(fpath1, fpath3, subplots=True)  # Amazon Prime: Static vs. Driving
 plot_df(fpath2, fpath4, subplots=True)  # Netflix: Static vs. Driving
 
 # RSRQ
-plot_df(fpath1, fpath2, y_axis='RSRQ')
-plot_df(fpath3, fpath4, y_axis='RSRQ')
-plot_df(fpath1, fpath3, y_axis='RSRQ')
-plot_df(fpath2, fpath4, y_axis='RSRQ')
+plot_df(fpath1, fpath2, y_axis='RSRQ')  # Static: Amazon Prime vs. Netflix
+# plot_df(fpath3, fpath4, y_axis='RSRQ')
+plot_df(fpath1, fpath3, y_axis='RSRQ')  # Amazon Prime: Static vs. Driving
+# plot_df(fpath2, fpath4, y_axis='RSRQ')
 
 # RSRP
-plot_df(fpath1, fpath2, y_axis='RSRP')
-plot_df(fpath3, fpath4, y_axis='RSRP')
-plot_df(fpath1, fpath3, y_axis='RSRP')
-plot_df(fpath2, fpath4, y_axis='RSRP')
+# plot_df(fpath1, fpath2, y_axis='RSRP')
+# plot_df(fpath3, fpath4, y_axis='RSRP')
+plot_df(fpath1, fpath3, y_axis='RSRP')  # Amazon Prime: Static vs. Driving
+plot_df(fpath2, fpath4, y_axis='RSRP')  # Netflix: Static vs. Driving
 
 # RSSI
-plot_df(fpath1, fpath2, y_axis='RSSI')
-plot_df(fpath3, fpath4, y_axis='RSSI')
-plot_df(fpath1, fpath3, y_axis='RSSI')
-plot_df(fpath2, fpath4, y_axis='RSSI')
+# plot_df(fpath1, fpath2, y_axis='RSSI')
+# plot_df(fpath3, fpath4, y_axis='RSSI')
+plot_df(fpath1, fpath3, y_axis='RSSI')  # Amazon Prime: Static vs. Driving
+plot_df(fpath2, fpath4, y_axis='RSSI')  # Netflix: Static vs. Driving
