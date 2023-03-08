@@ -104,8 +104,10 @@ def plot_df(fpath1 : str, fpath2 : str, y_axis='DL_bitrate', day='Day1', subplot
         if comparison == 'mobility pattern': x_dist = 0.915
         min_rows = min(df1.loc[df1.Day==day].count()[0], df2.loc[df2.Day==day].count()[0])
         # Adding rolling average column to the dataframes
-        df1['Rolling_avg'] = df1[y_axis].rolling(20).mean()
-        df2['Rolling_avg'] = df2[y_axis].rolling(20).mean()
+        mask1 = df1.Day==day
+        mask2 = df2.Day==day
+        df1.loc[mask1, 'Rolling_avg'] = df1.loc[mask1, y_axis].rolling(20).mean()
+        df2.loc[mask2, 'Rolling_avg'] = df2.loc[mask2, y_axis].rolling(20).mean()
         # Plot values and rolling averages of both datasets
         ax = df1.loc[df1.Day==day].head(min_rows).plot(x='Timestamp', y=y_axis, linewidth=1)
         df2.loc[df2.Day==day].head(min_rows).plot(ax=ax, x='Timestamp', y=y_axis, linewidth=1)

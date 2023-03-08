@@ -20,6 +20,7 @@ def clean_files(basepath):
         try:    
             df.insert(0,'Day','')
             df.insert(0,'Date','')
+            df['Rolling_avg'] = np.nan
             cleaned = df.drop(['Latitude','Longitude','Operatorname','CellID','PINGAVG','PINGMIN','PINGMAX','PINGSTDEV','PINGLOSS','CELLHEX','NODEHEX','LACHEX','RAWCELLID','NRxRSRP','NRxRSRQ'],axis=1)
         # Skip if attempting to clean already cleaned file
         except ValueError or KeyError:
