@@ -71,7 +71,7 @@ Regarding GitHub Repository - Well documented, reusable Python module targeted a
 │
 ├── generated_visualizations.ipynb          <- Jupyter notebook that creates  
 │                                              visualizations for presentation
-└── [insert PDF file name here]             <- PDF of presentation
+└── ECE 143 Project Presentation.pdf        <- PDF of presentation
 ```
 
 ## How to Run
