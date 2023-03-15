@@ -6,17 +6,9 @@
 
 *Dataset: [GitHub: uccmisl / 5Gdataset](https://github.com/uccmisl/5Gdataset)*
 
-**[TO-DO]**
+---
 
-Regarding GitHub Repository - Well documented, reusable Python module targeted at solving your proposal task. Follow all good coding practices and conventions discussed in class
-* Include all your code as .py files (therefore remember to write modular code to make life easier) 
-* Include 1 Jupyter notebook which shows all the visualizations you generated for your presentation.
-* Include a readme file that explains your file structure, how to run your code, and name all third-party modules you are using.
-* Include the final presentation as a pdf file
-
-[Sample README Template](https://github.com/azavea/python-project-template/blob/master/README.md)
-
-## File Structure
+## **File Structure**
 
 ```
 .
@@ -74,7 +66,9 @@ Regarding GitHub Repository - Well documented, reusable Python module targeted a
 └── ECE 143 Project Presentation.pdf        <- PDF of presentation
 ```
 
-## How to Run
+---
+
+## **How to Run**
 
 > Note: the output files (e.g. the cleaned data files and the plots) already exist in the repository, so the following steps are simply to describe the process as if they had not already been generated. If desired, you can remove the PNG files in the `plots` subdirectory, along with the `_cleaned.csv` and `combined.csv` files in each of the subdirectories of `5Gdataset-master`.
 
@@ -93,10 +87,15 @@ If you wish to plot datasets or y-axis values not plotted in `data_plot.py` or `
 * `show (bool)`: shows the figure if set to `False`, otherwise closes the figure; default is `False`
 * `columns (list(str))`: the list of column names that will be accessed in the function call; default is `['Day','Timestamp','DL_bitrate','RSRQ','RSRP','RSSI']`; requires `'Day'`, `'Timestamp'`, and `y_axis` at minimum
 
-## Third-Party Modules
+---
+
+## **Third-Party Modules**
 * NumPy
 * Pandas
+* Matplotlib
 
-## Sources
+---
+
+## **Sources**
 
 *[D. Raca, D. Leahy, C.J. Sreenan and J.J. Quinlan. Beyond Throughput, The Next Generation: A 5G Dataset with Channel and Context Metrics. ACM Multimedia Systems Conference (MMSys), Istanbul, Turkey. June 8-11, 2020.](https://dl.acm.org/doi/abs/10.1145/3339825.3394938)*

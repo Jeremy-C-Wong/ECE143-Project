@@ -6,8 +6,9 @@ import datetime as dt
 
 def clean_files(basepath):
     '''
-    Removes unnecessary columns and rows from each CSV file in the desired directory
-    Changes time and date stamps to times
+    Removes unnecessary columns and rows from and inserts new columns that are derived
+        from the existing data into each CSV file in the desired directory
+    Separates timestamp into two separate times and dates columns
     '''
     # Obtain list of all CSV files in directory - assuming Python file is in same directory as master data folder (5Gdataset-master)
     files = glob.glob(basepath + '/**/*.csv', recursive=True)
@@ -73,7 +74,7 @@ def combine_files(basepath):
 
 def set_day_nums(basepath):
     '''
-    Fill in combined.csv files 'Day_Timeframe to prepare data for plotting
+    Fill in combined.csv files 'Day' to prepare data for plotting
     '''
     files = glob.glob(basepath + '/**/*.csv', recursive=True)
 
